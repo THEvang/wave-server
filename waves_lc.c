@@ -32,31 +32,25 @@ main(int argc, char* argv[]) {
 		s[i] = 155 * (Hs_squared / pow(T1, 4)) * pow(w, -5) * exp( -944 / pow(T1, 4) * pow(w, -4)) * pow(gamma, Y);
 		amplitudes[i] = sqrt(2.0 * s[i] * delta_omega);
 	}
-
-	const char* fmt = "%lf\n";
 	
-	FILE* phases_file = fopen("Epsilons.txt", "w");
-	FILE* frequencies_file = fopen("Frequencies.txt", "w");
-	FILE* spectrum_file = fopen("Spectrum.txt", "w");
-	FILE* amplitudes_file = fopen("Amplitudes.txt", "w");
-
+	const char* fmt = "%lf,%lf,%lf,%lf\n";
+	
+	FILE* spectrum_file = fopen("Spectrum.csv", "w");
+	fprintf(spectrum_file, "Frequencies[rad/s],Spectrum[m²/s],Amplitude[m],Phase[rad]\n");
 	for (int i = 0; i < N_WAVES; i++) {
-		fprintf(phases_file, fmt, phases[i]);
-		fprintf(frequencies_file, fmt, frequencies[i]);
-		fprintf(spectrum_file, fmt, s[i]);
-		fprintf(amplitudes_file, fmt, amplitudes[i]);
+		fprintf(spectrum_file, fmt, frequencies[i], s[i], amplitudes[i], phases[i]);
 	}
 
-	const char* last_fmt = "%lf\n";
-	fprintf(phases_file, last_fmt, phases[N_WAVES]);
-	fprintf(frequencies_file, last_fmt, frequencies[N_WAVES]);
-	fprintf(spectrum_file, last_fmt, s[N_WAVES]);
-	fprintf(amplitudes_file, last_fmt, amplitudes[N_WAVES]);
-
-	fclose(phases_file);
-	fclose(frequencies_file);
 	fclose(spectrum_file);
-	fclose(amplitudes_file);
-
+	
+	const char* meta_fmt = "%s\t%lf\n";
+	FILE* meta_file = fopen("Meta.txt", "w");
+	fprintf(meta_file, meta_fmt, "OMEGA_MIN", omega_min);
+	fprintf(meta_file, meta_fmt, "OMEGA_MAX", omega_max);
+	fprintf(meta_file, meta_fmt, "OMEGA_DELTA", delta_omega);
+	fprintf(meta_file, meta_fmt, "T1", T1);
+	fprintf(meta_file, meta_fmt, "HS", Hs);
+	fprintf(meta_file, meta_fmt, "N_WAVES", N_WAVES);
 	return 0;
+
 }
