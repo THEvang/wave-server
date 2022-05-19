@@ -7,6 +7,17 @@
 
 int
 main(int argc, char* argv[]) {
+	
+	if (argc != 3) {
+		printf("usage: jonswap Hs T0\n");
+		return 1;
+	}
+
+	double Hs;
+	double T0;
+
+	sscanf(argv[1], "%lf", &Hs);
+	sscanf(argv[2], "%lf", &T0);
 
 	double phases[N_WAVES];
 	double frequencies[N_WAVES];
@@ -17,9 +28,7 @@ main(int argc, char* argv[]) {
 	double omega_max = 3.0;
 	double delta_omega = (omega_max - omega_min) / N_WAVES;
 	
-	double wp = 0.4;
-	double T1 = 0.834 * 2.0 * 3.14 / wp;
-	double Hs = 1.0;
+	double T1 = 0.834 * T0;
 	double Hs_squared = Hs * Hs;
 	double gamma = 3.3;
 	srand(time(NULL));
