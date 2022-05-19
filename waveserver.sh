@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mkdir -p server
-./waves_lc
+./waves_lc > Spectrum.csv
 gnuplot plot.gnuplot
 
 mv Spectrum.csv server/

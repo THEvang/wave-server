@@ -35,22 +35,10 @@ main(int argc, char* argv[]) {
 	
 	const char* fmt = "%lf,%lf,%lf,%lf\n";
 	
-	FILE* spectrum_file = fopen("Spectrum.csv", "w");
-	fprintf(spectrum_file, "Frequencies[rad/s],Spectrum[m²/s],Amplitude[m],Phase[rad]\n");
+	printf("Frequencies[rad/s],Spectrum[m²/s],Amplitude[m],Phase[rad]\n");
 	for (int i = 0; i < N_WAVES; i++) {
-		fprintf(spectrum_file, fmt, frequencies[i], s[i], amplitudes[i], phases[i]);
+		printf(fmt, frequencies[i], s[i], amplitudes[i], phases[i]);
 	}
 
-	fclose(spectrum_file);
-	
-	const char* meta_fmt = "%s\t%lf\n";
-	FILE* meta_file = fopen("Meta.txt", "w");
-	fprintf(meta_file, meta_fmt, "OMEGA_MIN", omega_min);
-	fprintf(meta_file, meta_fmt, "OMEGA_MAX", omega_max);
-	fprintf(meta_file, meta_fmt, "OMEGA_DELTA", delta_omega);
-	fprintf(meta_file, meta_fmt, "T1", T1);
-	fprintf(meta_file, meta_fmt, "HS", Hs);
-	fprintf(meta_file, meta_fmt, "N_WAVES", N_WAVES);
 	return 0;
-
 }
